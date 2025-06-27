@@ -93,7 +93,8 @@ The above steps successfully imported the dataset into my Power Query editor and
 ## Data Automation: Cleaning and Transformation
 
 Applied steps in transforming and cleaning the data in power query are highlighted in the snippet below:
-```let
+```
+let
     Source = Excel.Workbook(File.Contents("C:\Users\David Micheal\Desktop\David Michael\portfolio projects materials\real_estate_portfolio_data.xlsx"), null, true),
     real_estate_portfolio_data_Sheet = Source{[Item="real_estate_portfolio_data",Kind="Sheet"]}[Data],
     #"Promoted Headers" = Table.PromoteHeaders(real_estate_portfolio_data_Sheet, [PromoteAllScalars=true]),
@@ -101,64 +102,16 @@ Applied steps in transforming and cleaning the data in power query are highlight
     Custom1 = Table.TransformColumnNames(#"Changed Type", each Text.Replace(_, "_"," " )),
     #"Changed Type1" = Table.TransformColumnTypes(Custom1,{{"Date Listed", type date}, {"Date Sold", type date}, {"Occupancy Rate", Percentage.Type}, {"Commission Rate", Percentage.Type}, {"Sold Price", Currency.Type}, {"Maintenance Cost", Currency.Type}, {"Marketing Cost", Currency.Type}, {"Commission Earned", Currency.Type}})
 in
-    #"Changed Type1" ```
+    #"Changed Type1" 
+```
 
 ## Data Analysis using Power BI DAX and visualizations
 
 ### Dax Measures
 * To analyze the data, I created 2 groups of DAX measures with a combined total of 27 measures, some of which are listed below:
-1. **Base Measures: Containing all Financial Metrics**
-```
-1. Revenue = CALCULATE([Report Value],COA[Category] = "Revenue")
+1. **Base Measures: Containing all key metrics**
 
-2. Cost of Goods Sold = CALCULATE([Report Value], COA[Category] = "Cost of Goods Sold")
 
-3. Gross Profit = [Revenue]+[Cost of Goods Sold]
-
-4. Tax = if( [Net Income Before Tax]>0, -[Net Income Before Tax]*0.3, 0)
-
-5. Net Income = [Net Income Before Tax]+[Tax]
-
-6. Net Income Before Tax = [EBIT]+[Finance Costs]
-
-7. EBIT = [Gross Profit]+[Expenses]
-
-8. Expenses = CALCULATE([Report Value],COA[Category] = "Expenses")
-
-9. Finance Costs = Calculate( [Report Value], COA[Category] = "Finance Costs")
-
-10. Current = 
-var currentcategory = SELECTEDVALUE(Layout[Category])
-var Amount = switch(true(),
-                currentcategory = "Revenue", [Revenue],
-                currentcategory = "Cost of Goods Sold", [Cost of Goods Sold],
-                currentcategory = "Gross Profit", [Gross Profit],
-                currentcategory = "Expenses", [Expenses],
-                currentcategory = "EBIT", [EBIT],
-                currentcategory = "Finance Costs", [Finance Costs],
-                currentcategory = "Net Income Before Tax", [Net Income Before Tax],
-                currentcategory = "Tax", [Tax],
-                currentcategory = "Net Income", [Net Income],
-                0)
-RETURN
-    Amount
-
-11. Previous = CALCULATE([Current], SAMEPERIODLASTYEAR('Calendar'[Date]))
-```
-2. **KPI Measures: measures to compare metrics across periods.** 
-```
-1. Finance Costs Current = abs(CALCULATE([Current], Layout[Category]= "Finance Costs"))
-
-2. Expenses Previous = abs(CALCULATE([Previous], Layout[Category] = "Expenses"))
-
-3. Expenses % Change = CALCULATE([% Change], Layout[Category] = "Expenses")
-
-4. EBIT Previous = abs(CALCULATE([Previous], Layout[Category] = "EBIT"))
-
-6. Cost of Goods Sold Previous = abs(CALCULATE([Previous], Layout[Category] = "Cost of Goods Sold"))
-
-7. Revenue Previous = abs(CALCULATE([Previous], Layout[Category] = "Cost of Goods Sold"))
- ```
 ## Data Visualizations
 To visualize the data, I used the following native power BI visuals: Matrix, Cards, bar charts, column chart, Slicer, and conditional formatting tools. See dashboard snippet below:
 
