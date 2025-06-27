@@ -77,7 +77,7 @@ The dataset contains 10,000 rows and 22 columns. The columns are described as fo
 ## Languages, Utilities, and Environments Used
 * Microsoft Excel: Data Simulation
 * Power Query: Data Automation: Cleaning, and Transformation
-* Power BI: Data Analysis and Exploration [(link to the Power BI file)](https://drive.google.com/file/d/1_ilCZP-Ss7KfRQsa-HjBi4pBolh0EnQV/view?usp=drive_link)
+* Power BI: Data Analysis and Exploration [(link to the Power BI file)](https://drive.google.com/file/d/19g7A-RJ6zEii3Pl4Pmww20Obx8tlXyom/view?usp=drive_link)
 
 ## Importing the Datasets into Power BI
 To import the dataset into Power BI, I proceeded as follows:  
@@ -92,52 +92,16 @@ The above steps successfully imported the dataset into my Power Query editor and
 
 ## Data Automation: Cleaning and Transformation
 
-1. **Unpivot Columns**
-*  Unpivoted the Transaction types Credit (Cr), and Debit (Dr) columns to transform into rows instead of columns for useability 
-2. **Rename Columns**
-* Rename the newly created columns from the step above.
-3. **Add Custom Column** 
-* Add a custom column to negate all the debit entries and change data type
-```
-let
-    Source = Excel.Workbook(File.Contents("C:\Users\David Micheal\Downloads\Creating an Income Statement Dashboard_Start.xlsx"), null, true),
-    Journal_Sheet = Source{[Item="Journal",Kind="Sheet"]}[Data],
-    #"Promoted Headers" = Table.PromoteHeaders(Journal_Sheet, [PromoteAllScalars=true]),
-    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Date", type date}, {"Division", type text}, {"Description", type text}, {"Dr", type text}, {"Cr", type text}, {"Amount", type number}}),
-    #"Unpivoted Columns" = Table.UnpivotOtherColumns(#"Changed Type", {"Date", "Division", "Description", "Amount"}, "Attribute", "Value"),
-    #"Renamed Columns" = Table.RenameColumns(#"Unpivoted Columns",{{"Attribute", "Type"}, {"Value", "Account"}}),
-    #"Added Custom" = Table.AddColumn(#"Renamed Columns", "TB Amount", each if[Type] = "Dr" then [Amount]*-1 else [Amount]),
-    #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom",{{"TB Amount", type number}})
+Applied steps in transforming and cleaning the data in power query are highlighted in the snippet below:
+```let
+    Source = Excel.Workbook(File.Contents("C:\Users\David Micheal\Desktop\David Michael\portfolio projects materials\real_estate_portfolio_data.xlsx"), null, true),
+    real_estate_portfolio_data_Sheet = Source{[Item="real_estate_portfolio_data",Kind="Sheet"]}[Data],
+    #"Promoted Headers" = Table.PromoteHeaders(real_estate_portfolio_data_Sheet, [PromoteAllScalars=true]),
+    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Property_ID", type text}, {"Location", type text}, {"Date_Listed", Int64.Type}, {"Property_Type", type text}, {"Agent", type text}, {"Bedrooms", Int64.Type}, {"Bathrooms", Int64.Type}, {"Lot_Size_SqFt", Int64.Type}, {"Year_Built", Int64.Type}, {"Condition", type text}, {"Listed_Price", Int64.Type}, {"Date_Sold", Int64.Type}, {"Sold_Price", type number}, {"Is_Rental", type logical}, {"Monthly_Rent", Int64.Type}, {"Maintenance_Cost", Int64.Type}, {"Marketing_Cost", Int64.Type}, {"Commission_Earned", type number}, {"Days_on_Market", Int64.Type}, {"Price_per_SqFt", type number}, {"Occupancy_Rate", type number}, {"Commission_Rate", type number}}),
+    Custom1 = Table.TransformColumnNames(#"Changed Type", each Text.Replace(_, "_"," " )),
+    #"Changed Type1" = Table.TransformColumnTypes(Custom1,{{"Date Listed", type date}, {"Date Sold", type date}, {"Occupancy Rate", Percentage.Type}, {"Commission Rate", Percentage.Type}, {"Sold Price", Currency.Type}, {"Maintenance Cost", Currency.Type}, {"Marketing Cost", Currency.Type}, {"Commission Earned", Currency.Type}})
 in
-    #"Changed Type1"
-```
-### Create new tables
-1. **Create New Tables to be used as a visual slicer using the Division**
-* Create a new table by referencing the journal table, then take out all other columns except the Division column, take out duplicates.
-* Close and apply changes
-```
-let
-    Source = Journal,
-    #"Removed Other Columns" = Table.SelectColumns(Source,{"Division"}),
-    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns")
-in
-    #"Removed Duplicates"
-```
-
-2.  **Create Calendar table**
-*  In the desktop view, create Calendar table, and mark as date table
-```
-Calendar = ADDCOLUMNS(
-                    CALENDAR(MIN(Journal[Date]),max(Journal[Date])),
-                    "Year", year([Date]),
-                    "Month", month([Date]),
-                    "Month Name", format([Date], "mmm")
-                      )
-```
-### Data Modelling
-* I created a star schema data model by connecting all tables to the Journal table in a one-to-many relationship.
-See snippet below: 
-![Data Modelling](https://github.com/davidutibe/finance_management_dashboard/blob/main/Data%20Modelling.JPG)
+    #"Changed Type1" ```
 
 ## Data Analysis using Power BI DAX and visualizations
 
