@@ -49,7 +49,7 @@ The project aims to answer the following research questions:
 
 ## About the Dataset
 The dataset was randomly generated using Microsoft Excel and tailored to meet the purpose of this project.
-[(Link to the dataset)]([https://docs.google.com/spreadsheets/d/1i778j9FUP08VgS25v64mK8oGUDGDGCxYe9vUziXigrg/edit?gid=0#gid=0](https://docs.google.com/spreadsheets/d/13ePx7OOsPBk7ocTlroBT7clDB-kSIqSr/edit?gid=676727392#gid=676727392))
+[(Link to the dataset)]()
 
 The dataset 10,000 rows rows 22 columns. The columns are described as follows:
 
@@ -184,7 +184,7 @@ RETURN
 ## Data Visualizations
 To visualize the data, I used the following native power BI visuals: Matrix, Cards, Doughnut chart, Slicer, Sparkline, and conditional formatting tools. See dashboard snippet below:
 
-![Dashboard snippet](https://github.com/davidutibe/finance_management_dashboard/blob/main/Finance%20Dashboard%20(Management).JPG?raw=true)
+![Dashboard snippet](https://github.com/davidutibe/real-estate-property-management-dashboard/blob/main/property%20management%20dashboard.JPG)
 
 ## Insights from the Data Analysis
 1. **How did cost of goods sold (COGS) trends affect gross margins across months?**  
