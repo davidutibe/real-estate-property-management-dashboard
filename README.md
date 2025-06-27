@@ -49,16 +49,30 @@ The project aims to answer the following research questions:
 
 ## About the Dataset
 The dataset was randomly generated using Microsoft Excel and tailored to meet the purpose of this project.
-[(Link to the dataset)]()
+[(Link to the dataset)](https://docs.google.com/spreadsheets/d/1NyLEqB99SyvTM-0XR0Q6yDrfvwrSv0M_/edit?gid=2055784160#gid=2055784160)
 
-The dataset 10,000 rows rows 22 columns. The columns are described as follows:
+The dataset contains 10,000 rows and 22 columns. The columns are described as follows:
 
-* *Date*: Date a transaction was carried out
-* *Division*: Regions (East, North, West, and South) where the company is operational
-* *Description*: Transaction Detail
-* *Dr*: Debit Column
-* *Cr*: Credit Column
-* *Amount*: Monetary value of transaction
+* *Property ID*: Unique identifier for each property
+* *Location*: City (Abuja, Ibadan, Lagos, Onitsha, Port Harcourt) where the property is located
+* *Date Listed*: Date the property is put up for sale/ rent
+* *Property Type*: Type of property (Industrial, Residential, Individual, Land)
+* *Agent*: Sales person in charge of the property
+* *Bedrooms*: Number of bedrooms
+* *Bathrooms*: Number of bathrooms
+* *Lot Size SqFt*: Size of property
+* *Year_Built*: Year the property was built
+* *Condition*: Current state of the property (Excellent, Good, Fair, Poor)
+* *Listed Price*: Property at which the property is quoted for sale
+* *Date Sold*: Date the property is sold
+* *Sold Price*: Price the property is sold
+* *Is Rental*: Validation (True/ False) if the property is for rent
+* *Monthly Rent*: Rent Paid monthly for the property
+* *Maintenance Cost*: Cost of maintaining the property
+* *Commission Rate*: Percentage of commission earned by the agent for selling or renting out the property
+* *Commission Earned*: Commission earned by the agent for selling/ renting the property
+* *Days on Market*: Days between property listing and property sale
+* *Occupancy Rate*: The ratio of times in a year where the property is occupied
 
 ## Languages, Utilities, and Environments Used
 * Microsoft Excel: Data Simulation
@@ -182,7 +196,7 @@ RETURN
 7. Revenue Previous = abs(CALCULATE([Previous], Layout[Category] = "Cost of Goods Sold"))
  ```
 ## Data Visualizations
-To visualize the data, I used the following native power BI visuals: Matrix, Cards, Doughnut chart, Slicer, Sparkline, and conditional formatting tools. See dashboard snippet below:
+To visualize the data, I used the following native power BI visuals: Matrix, Cards, bar charts, column chart, Slicer, and conditional formatting tools. See dashboard snippet below:
 
 ![Dashboard snippet](https://github.com/davidutibe/real-estate-property-management-dashboard/blob/main/property%20management%20dashboard.JPG)
 
